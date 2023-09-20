@@ -9,21 +9,6 @@ h1 {
     color: rgb(13, 13, 43);
 }
 
-#data-container {
-    background-color: lightcoral;
-    margin: 20px;
-    padding: 10px;
-    border: 3px solid black;
-}
-
-#spotify-logo {
-    position: absolute;
-    top: 30px;
-    left: 30px;
-    width: 150px;
-    height: auto;
-}
-
 ul {
     list-style-type: none;
     padding: 0;

@@ -37,7 +37,69 @@
 // }
 // getData()
 
-const token = 'BQD_FjVPZjBX1mH8QHPh929rRIhrprwoHj9GlpMo5wFWjPzBYQ1oSVegD1SToNfGuXHbjmY8O-idojiYicFYf9PenRrlz1YYCzWVpwKEWXfgsCspv1TSM6N3LJfqyPBGV_NpsFMgjeLhMC5uhAx7LRKRwREntl1HtwkVEnk29fM9c_aB2fBqz_ALsaJDeAFeDaZswE4JyWRo1zEmPUOlBlQa9rAk7raEKghroV50TuPgTurNrwuaRm8lydlx5Rm2Y7Iu58UvDOIgvmofaVnJGg5k';
+// const token = 'BQD_FjVPZjBX1mH8QHPh929rRIhrprwoHj9GlpMo5wFWjPzBYQ1oSVegD1SToNfGuXHbjmY8O-idojiYicFYf9PenRrlz1YYCzWVpwKEWXfgsCspv1TSM6N3LJfqyPBGV_NpsFMgjeLhMC5uhAx7LRKRwREntl1HtwkVEnk29fM9c_aB2fBqz_ALsaJDeAFeDaZswE4JyWRo1zEmPUOlBlQa9rAk7raEKghroV50TuPgTurNrwuaRm8lydlx5Rm2Y7Iu58UvDOIgvmofaVnJGg5k';
+// const artistIds = [
+//   '4YRxDV8wJFPHPTeXepOstw',
+//   '7uIbLdzzSEqnX0Pkrb56cR',
+//   '0oOet2f43PA68X5RxKobEy',
+//   '2o4R2rK7FetH40HTv0SUWl',
+//   '00sCATpEvwH48ays7PlQFU',
+//   '7n2wHs1TKAczGzO7Dd2rGr',
+//   '0C8ZW7ezQVs4URX5aX7Kqx',
+//   '2GoeZ0qOTt6kjsWW4eA6LS',
+//   '7hHDO4bJGlEaEHlY2lj1eZ',
+//   '4zCH9qm4R2DADamUHMCa6O'
+// ];
+
+// const dataContainer = document.getElementById("data-container");
+
+// async function fetchArtistData(artistId) {
+//   const artistUrl = `https://api.spotify.com/v1/artists/${artistId}`;
+//   const headers = {
+//     'Authorization': `Bearer ${token}`
+//   };
+
+//   try {
+//     const response = await fetch(artistUrl, { headers });
+//     const data = await response.json();
+//     return data;
+//   } catch (error) {
+//     console.error("Error fetching artist data:", error);
+//     return null;
+//   }
+// }
+
+// async function getData() {
+//   try {
+//     const artistDataPromises = artistIds.map(fetchArtistData);
+//     const artistDataArray = await Promise.all(artistDataPromises);
+
+//     const artistList = document.createElement("ul");
+
+//     artistDataArray.forEach(artist => {
+//       if (artist) {
+//         const listItem = document.createElement("li");
+//         listItem.innerHTML = `
+//           <h3>Artist Name: ${artist.name}</h3>
+//           <p>Follower: ${artist.followers.total}</p>
+//           <p>Music Kind: ${artist.genres.join(', ')}</p>
+//           <p>Popularity: ${artist.popularity}</p>
+//           <img src="${artist.images[0].url}" alt="${artist.name}'s Image">
+//         `;
+//         artistList.appendChild(listItem);
+//       }
+//     });
+
+//     dataContainer.appendChild(artistList);
+//   } catch (error) {
+//     console.error("Error fetching data:", error);
+//   }
+// }
+
+// getData();
+
+const clientId = 'cb1a74d0676c4fa480b4df064fac78bc';
+const clientSecret = '34b1c73f12774367a7453bf5ea135e2c';
 const artistIds = [
   '4YRxDV8wJFPHPTeXepOstw',
   '7uIbLdzzSEqnX0Pkrb56cR',
@@ -49,51 +111,80 @@ const artistIds = [
   '2GoeZ0qOTt6kjsWW4eA6LS',
   '7hHDO4bJGlEaEHlY2lj1eZ',
   '4zCH9qm4R2DADamUHMCa6O'
-];
+  ];
 
-const dataContainer = document.getElementById("data-container");
 
-async function fetchArtistData(artistId) {
-  const artistUrl = `https://api.spotify.com/v1/artists/${artistId}`;
-  const headers = {
-    'Authorization': `Bearer ${token}`
-  };
+const getAccessToken = async () => {
+    
+    const basicAuth = btoa(`${clientId}:${clientSecret}`);
 
-  try {
-    const response = await fetch(artistUrl, { headers });
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Error fetching artist data:", error);
-    return null;
-  }
-}
-
-async function getData() {
-  try {
-    const artistDataPromises = artistIds.map(fetchArtistData);
-    const artistDataArray = await Promise.all(artistDataPromises);
-
-    const artistList = document.createElement("ul");
-
-    artistDataArray.forEach(artist => {
-      if (artist) {
-        const listItem = document.createElement("li");
-        listItem.innerHTML = `
-          <h3>Artist Name: ${artist.name}</h3>
-          <p>Follower: ${artist.followers.total}</p>
-          <p>Music Kind: ${artist.genres.join(', ')}</p>
-          <p>Popularity: ${artist.popularity}</p>
-          <img src="${artist.images[0].url}" alt="${artist.name}'s Image">
-        `;
-        artistList.appendChild(listItem);
-      }
+    const response = await fetch('https://accounts.spotify.com/api/token', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Basic ${basicAuth}`,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'grant_type=client_credentials'
     });
 
-    dataContainer.appendChild(artistList);
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-}
+    const data = await response.json();
+    console.log(data);
+    return data.access_token;
+};
 
-getData();
+
+async function fetchArtistData(artistId, accessToken) {
+    const artistUrl = `https://api.spotify.com/v1/artists/${artistId}`;
+    const headers = {
+        'Authorization': `Bearer ${accessToken}`
+    };
+
+    try {
+        const response = await fetch(artistUrl, { headers });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error fetching artist data:", error);
+        return null;
+    }
+}
+// Render artists on the webpage
+const renderArtists = (artists) => {
+    const artistList = document.getElementById('artist-list');
+    artists.forEach((artist) => {
+        const artistCard = document.createElement('div');
+        artistCard.classList.add('artist-card');
+
+        const artistName = document.createElement('h2');
+        artistName.textContent = artist.name;
+
+        const artistImage = document.createElement('img');
+        artistImage.classList.add('artist-image');
+        artistImage.src = artist.images[1] ? artist.images[1].url : 'default-image.jpg';
+        artistImage.alt = artist.name;
+
+        const listItem = document.createElement("p");
+        listItem.textContent = `Popularity: ${artist.popularity},Followers:${artist.followers.total}`;
+
+
+        artistCard.appendChild(artistImage);
+        artistCard.appendChild(artistName);
+        artistCard.appendChild(listItem);
+        artistList.appendChild(artistCard);
+    });
+};
+
+const main = async () => {
+    try {
+        const accessToken = await getAccessToken();
+        const artistDataPromises = artistIds.map((artistId) => fetchArtistData(artistId, accessToken));
+        const topArtists = await Promise.all(artistDataPromises);
+        renderArtists(topArtists);
+        console.log(accessToken);
+    } catch (error) {
+        console.error('An error occurred:', error);
+    }
+    console.log('Main function called.');
+};
+
+main();
