@@ -28,10 +28,11 @@ text-align: center;
 }
 
 .card{
-    width: max(50%, 300px);
+    width: max(40%, 300px);
     position:absolute;
     background: linear-gradient(135deg, rgb(90, 167, 198), #034530);
     color: #fcfcfc;
+    border: solid black;
     border-radius: 20px;
     padding: 40px 20px;
     margin: 2%;
@@ -46,10 +47,10 @@ text-align: center;
         padding: 5%;
 
         & input{
-            border: 0;
+            border: solid black;
             outline: 0;
             background: #ebfffc;
-            color: #000000;
+            color: #454545;
             padding: 10px 25px;
             height: 60px;
             border-radius: 24px;
@@ -58,7 +59,7 @@ text-align: center;
         }
 
         & button{
-            border: 0;
+            border: solid black;
             outline: 0;
             background: #e9faf7;
             border-radius: 50%;
@@ -141,9 +142,5 @@ text-align: center;
             }
         }
     }
-    .weather .error-message {
-        color:black;
-        font-size: 16px;
-        margin: 10px 0;
-    }
+
 }
