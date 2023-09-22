@@ -1,8 +1,23 @@
-
 body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     text-align: center;
     background-color: blanchedalmond;
+    #artist-list {
+        margin: 20px;
+        padding: 10px;
+        background-color: #f3a5a5;
+        justify-content: center;
+        border-radius: 15px;
+        display: flex;
+        width: 100%;
+        flex-wrap: wrap;
+        flex-direction: row;
+      }
+    .artist-card {
+        background-color:antiquewhite;
+        margin: 10px;
+        padding: 10px;
+    }
 }
 
 h1 {
